@@ -1,4 +1,4 @@
-# LINE-Expression-LRS
+# LINE Expression Analysis in Long-Read Sequencing 
 Bioinformatics pipeline for the identification and quantification of active, full-length Long INterspersed Elements (LINEs)
 
 ## Background Information
