@@ -21,11 +21,10 @@ Bedtools
 ## Input File Types
 The pipeline is designed to take in a single input file, which can be in either `FASTQ` or `FASTA` format, suitable for both RNA and cDNA sequencing data. If dealing with multiple FASTQ files, it is best to merge the files using the `cat` command beforehand.
 
-### Note: Feel free to change the reference files used by changing the appropriate path to the new files within each of the subsequent scripts. 
-
-
 
 # Script Descriptions 
+#### Be sure to change all `..` in the paths with the appropriate path to the file of interest. 
+
 
 ## 1. Data Preprocessing  `a_preprocess.sh`
 This script first initializes the subsequent directories and input files required for analysis. Next, using a custom LINE reference library as a reference, mapping with Minimap2 was completed to obtain input reads (>1kb) containing L1 elements. The custom LINE reference library was constructed by merging the UCSC hg38 RepeatMasker track with the LINE/L1 consensus sequences from the Repbase RepeatMasker library. 
