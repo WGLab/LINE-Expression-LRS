@@ -7,7 +7,6 @@ Long INterspersed Elements (LINEs) are a class of retrotransposons of transposab
 
 
 ## Program Requirements
-It is advised to download the most recent release of each program to a conda envirionment. 
 ```
 Minimap2
 RepeatMasker
@@ -18,50 +17,70 @@ Samtools
 Bedtools
 ```
 
+# Script Descriptions 
+
 ## Input File Types
 The pipeline is designed to take in a single input file, which can be in either `FASTQ` or `FASTA` format, suitable for both RNA and cDNA sequencing data. If dealing with multiple FASTQ files, it is best to merge the files using the `cat` command beforehand.
 
 
-# Script Descriptions 
-#### Be sure to change all `..` in the paths with the appropriate path to the file of interest. 
+## 1. Data Preprocessing  Part 1: Initialization 
 
+### `a_preprocess.sh`
 
-## 1. Data Preprocessing  `a_preprocess.sh`
-This script first initializes the subsequent directories and input files required for analysis. Next, using a custom LINE reference library as a reference, mapping with Minimap2 was completed to obtain input reads (>1kb) containing L1 elements. The custom LINE reference library was constructed by merging the UCSC hg38 RepeatMasker track with the LINE/L1 consensus sequences from the Repbase RepeatMasker library. 
+This script first initializes the subsequent directories and input files required for analysis and was filtered to retain reads longer than 1kb. 
 
 To customize the script, provide the following command-line parameters:
 1. Sample Name  (all one word)
-2. **Full** Path to the Input File (entire path)
+2. **Full** Path to the Input  and Reference Files (entire path)
 3. Input File Format (FASTQ or FASTA)
 4. Data Type (RNA or cDNA)
 
-Running the script, for instance, if your input is in FASTA format and originates from RNA sequencing: 
-`a_preprocess.sh sample_name /path/to/input/fasta/file.fasta FASTA RNA`
+
+## 2. Data Preprocessing Part 2: Mapping to Custom LINE Reference Library 
+
+### `a_preprocess_mapping.sh`
+
+Next, using a custom LINE reference library as a reference, mapping with Minimap2 was completed as a filtering step to retain reads that contained L1 elements. The custom LINE reference library was constructed by merging the UCSC hg38 RepeatMasker track with the LINE/L1 consensus sequences from the Repbase RepeatMasker library. 
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. **Full** Path to the Input and Reference Files (entire path)
 
 
+## 3. L1 Detection Part 1: RepeatMasker
 
+### `b_L1_detection.sh` 
 
-
-## 2. L1 Detection  `b_L1_detection.sh`
 This script first runs RepeatMasker to identify reads with any type of transposable element. The RepeatMasker output was processed to retain reads with less than 10% diverged LINE/L1 elements from the RepeatMasker L1 consensus. 
 
-Running the script: 
-`b_L1_detection.sh sample_name`
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. **Full** Path to the Input and Reference Files (entire path)
 
 
+## 4. L1 Detection Part 2: Mapping Reads with LINE/L1 Elements Detected to the hg38 Reference Genome 
+
+### `b_map_hg38.sh` 
+
+Reads with less than 10% diverged LINE/L1 elements were retained for Minimap2 splice-aware mapping to the hg38 reference genome. 
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. **Full** Path to the Input and Reference Files (entire path)
 
 
-## 3. Mapping Reads with LINE/L1 Elements Detected to the hg38 Reference Genome and Mapping Statistics with LongReadSum `c_hg38_map_LRS.sh`
-Reads with less than 10% diverged LINE/L1 elements were retained for Minimap2 splice-aware mapping to the hg38 reference genome. LongReadSum was utilized to report mapping statistics for quality check analysis. 
+## 5. L1 Detection Part 3: Mapping Statistics with LongReadSum 
 
-Running the script: 
-`c_hg38_map_LRS.sh sample_name`
+### `b_map_qc_LRS.sh` 
 
---- fixing this and below --- 
+LongReadSum was utilized to report mapping statistics for quality check analysis. 
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. **Full** Path to the Input and Reference Files (entire path)
 
 
-
-## 4. Artifact-Based Filtering
+## 6. Artifact-Based Filtering
 Artifact-Based Filtering: First, we removed reads where less than 90% of the read itself mapped to the L1 region of interest. Then, L1 regions with exon overlap, fewer than two mapped reads, inconsistent read start position among the reads within the L1 region (threshold 100bps), and overall starting positions too far from the L1 region start position (threshold 1.5kb) were removed from analysis to filter out false positives. 
 
 
