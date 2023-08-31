@@ -89,7 +89,7 @@ To customize the script, provide the following command-line parameters:
 2. **Full** Path to the Input and Reference Files (entire path)
 
 
-### 6. Artifact-Based Filtering Part 1: Read Filter (Removed)
+## 6. Artifact-Based Filtering Part 1: Read Filter (Removed)
 Artifact-Based Filtering: First, we removed reads where less than 90% of the read itself mapped to the L1 region of interest. With the remaining reads, a bedgraph was generated for downstream calculations of L1 expression levels. 
 
 ### `06_read_filter.sh`
@@ -101,7 +101,7 @@ To customize the script, provide the following command-line parameters:
 
 Example: `06_read_filter.sh sample_name active`
 
-### 7. Artifact-Based Filtering Part 2: L1 Loci with Exon Overlap (Removed)
+## 7. Artifact-Based Filtering Part 2: L1 Loci with Exon Overlap (Removed)
 Next, L1 regions with exon overlap using GENCODE.v43 were removed. The exon annotations from GENCODE.v43 were combined into a new annotation file and using `bedtools intersect`, L1 loci with overlap were removed. 
 
 ### `07_exon_filter.sh`
@@ -111,7 +111,7 @@ To customize the script, provide the following command-line parameters:
 
 
 
-### 8. Artifact-Based Filtering Part 3: L1 Loci Filter (Removed) 
+## 8. Artifact-Based Filtering Part 3: L1 Loci Filter (Removed) 
 Next, regions with fewer than two mapped reads, inconsistent read start position among the reads located within the L1 region (threshold 100bps), and overall starting positions too far from the L1 region start position (threshold 1.5kb) were removed from analysis to filter out false positives.  
 
 ### `08_L1_loci_filter.sh`
