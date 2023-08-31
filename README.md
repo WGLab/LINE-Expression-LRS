@@ -8,14 +8,23 @@ Long INterspersed Elements (LINEs) are a class of retrotransposons of transposab
 
 ## Program Requirements
 ```
-Minimap2
-RepeatMasker
-Python
-Seqtk
-LongReadSum
-Samtools
-Bedtools
+1. Minimap2
+2. RepeatMasker
+3. Python
+4. Seqtk
+5. LongReadSum
+6. Samtools
+7. Bedtools
 ```
+
+# Reference Requirements 
+```
+1. hg38 Reference Genome
+2. gencode.v40.annotation.bed (and/or v43)
+3. Custom LINE Reference Library: UCSC hg38 RepeatMasker track and LINE/L1 consensus sequences from the Repbase RepeatMasker library 
+4. L1Base2 Active, Inactive, and Intact Only in ORF2 Reference Regions
+```
+
 
 # Script Descriptions 
 
@@ -25,7 +34,7 @@ The pipeline is designed to take in a single input file, which can be in either 
 
 ## 1. Data Preprocessing  Part 1: Initialization 
 
-### `a_preprocess.sh`
+### `01_preprocess_input.sh`
 
 This script first initializes the subsequent directories and input files required for analysis and was filtered to retain reads longer than 1kb. 
 
@@ -38,7 +47,7 @@ To customize the script, provide the following command-line parameters:
 
 ## 2. Data Preprocessing Part 2: Mapping to Custom LINE Reference Library 
 
-### `a_preprocess_mapping.sh`
+### `02_preprocess_mapping.sh`
 
 Next, using a custom LINE reference library as a reference, mapping with Minimap2 was completed as a filtering step to retain reads that contained L1 elements. The custom LINE reference library was constructed by merging the UCSC hg38 RepeatMasker track with the LINE/L1 consensus sequences from the Repbase RepeatMasker library. 
 
@@ -49,7 +58,7 @@ To customize the script, provide the following command-line parameters:
 
 ## 3. L1 Detection Part 1: RepeatMasker
 
-### `b_L1_detection.sh` 
+### `03_L1_detection.sh` 
 
 This script first runs RepeatMasker to identify reads with any type of transposable element. The RepeatMasker output was processed to retain reads with less than 10% diverged LINE/L1 elements from the RepeatMasker L1 consensus. 
 
@@ -60,7 +69,7 @@ To customize the script, provide the following command-line parameters:
 
 ## 4. L1 Detection Part 2: Mapping Reads with LINE/L1 Elements Detected to the hg38 Reference Genome 
 
-### `b_map_hg38.sh` 
+### `04_map_hg38.sh` 
 
 Reads with less than 10% diverged LINE/L1 elements were retained for Minimap2 splice-aware mapping to the hg38 reference genome. 
 
@@ -71,7 +80,7 @@ To customize the script, provide the following command-line parameters:
 
 ## 5. L1 Detection Part 3: Mapping Statistics with LongReadSum 
 
-### `b_map_qc_LRS.sh` 
+### `05_map_qc_LRS.sh` 
 
 LongReadSum was utilized to report mapping statistics for quality check analysis. 
 
@@ -80,13 +89,53 @@ To customize the script, provide the following command-line parameters:
 2. **Full** Path to the Input and Reference Files (entire path)
 
 
-## 6. Artifact-Based Filtering
-Artifact-Based Filtering: First, we removed reads where less than 90% of the read itself mapped to the L1 region of interest. Then, L1 regions with exon overlap, fewer than two mapped reads, inconsistent read start position among the reads within the L1 region (threshold 100bps), and overall starting positions too far from the L1 region start position (threshold 1.5kb) were removed from analysis to filter out false positives. 
+### 6. Artifact-Based Filtering Part 1: Read Filter (Removed)
+Artifact-Based Filtering: First, we removed reads where less than 90% of the read itself mapped to the L1 region of interest. With the remaining reads, a bedgraph was generated for downstream calculations of L1 expression levels. 
+
+### `06_read_filter.sh`
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. Specify the Reference L1 Region File (Active, Inactive, or Intact Only in ORF2) 
+3. **Full** Path to the Input and Reference Files (entire path)
+
+Example: `06_read_filter.sh sample_name active`
+
+### 7. Artifact-Based Filtering Part 2: L1 Loci with Exon Overlap (Removed)
+Next, L1 regions with exon overlap using GENCODE.v43 were removed. The exon annotations from GENCODE.v43 were combined into a new annotation file and using `bedtools intersect`, L1 loci with overlap were removed. 
+
+### `07_exon_filter.sh`
+
+To customize the script, provide the following command-line parameters:
+1. **Full** Path to the Input and Reference Files (entire path)
+
+
+
+### 8. Artifact-Based Filtering Part 3: L1 Loci Filter (Removed) 
+Next, regions with fewer than two mapped reads, inconsistent read start position among the reads located within the L1 region (threshold 100bps), and overall starting positions too far from the L1 region start position (threshold 1.5kb) were removed from analysis to filter out false positives.  
+
+### `08_L1_loci_filter.sh`
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. **Full** Path to the Input and Reference Files (entire path)
+
+The final number of reads for each region is located in the file titled: `active_coverage_for_weighted_avg.bed` (for example, if you are calculating over the active L1 regions)
+
+
+## 9. L1 Quantification: Normalization by Total Number of Reads and Weighted Average
+To determine the general expression level of these L1 loci, the calculated coverage values were first normalized by the total number of reads in the sample. Then, a weighted average was computed across all L1 loci in each of the reference L1Base2 categories: active, inactive, and intact only in ORF2, for each sample. This weighted average involved assigning weights based on the length of the reference L1 element with its corresponding expression value, scaled in millions, as displayed below. For i takes the L1 reference category, "active," "inactive," and "ORF2" to represent the different categories. 
+<img width="947" alt="weighted_avg_equation" src="https://github.com/WGLab/LongGF/assets/89222332/b348898f-7929-474b-91ec-ca6b9a441250">
+
+### `09_normalization_wgt_avg.sh`
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. **Full** Path to the Input and Reference Files (entire path)
 
 
 
 
-## 5. L1 Quantification
 
 
 
