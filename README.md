@@ -151,8 +151,8 @@ To customize the script, provide the following command-line parameters:
 
 
 ## 10. L1 Quantification: Normalization by Total Number of Reads and Weighted Average
-To determine the general expression level of these L1 loci, the calculated coverage values were first normalized by the total number of reads in the sample. Then, a weighted average was computed across all L1 loci in each of the reference L1Base2 categories: active, inactive, and intact only in ORF2, for each sample. This weighted average involved assigning weights based on the length of the reference L1 element with its corresponding expression value, scaled in millions, as displayed below. For i takes the L1 reference category, "active," "inactive," and "ORF2" to represent the different categories. 
-<img width="947" alt="weighted_avg_equation" src="https://github.com/WGLab/LongGF/assets/89222332/b348898f-7929-474b-91ec-ca6b9a441250">
+To determine the general expression level of these L1 loci, the calculated coverage values were first normalized by the total number of reads in the sample. Then, a weighted average was computed across all L1 loci in each of the reference L1Base2 categories: active, inactive, and intact only in ORF2, for each sample. This weighted average involved assigning weights based on the length of the reference L1 element with its corresponding expression value, scaled in millions, as displayed below. For i takes the L1 reference category, "Active," "Inactive," and "Intact only in ORF2" to represent the different categories. 
+<img width="1179" alt="Screenshot 2023-09-01 at 5 08 03 PM" src="https://github.com/WGLab/LINE-Expression-LRS/assets/89222332/6582f5e5-105b-462a-80d6-0164fbae5bf6">
 
 ### `10_normalization_wgt_avg.sh`
 
