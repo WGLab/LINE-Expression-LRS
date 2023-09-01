@@ -17,7 +17,7 @@ Long INterspersed Elements (LINEs) are a class of retrotransposons of transposab
 7. Bedtools
 ```
 
-# Reference Requirements 
+## Reference Requirements 
 ```
 1. hg38 Reference Genome
 2. gencode.v40.annotation.bed (and/or v43)
@@ -27,6 +27,19 @@ Long INterspersed Elements (LINEs) are a class of retrotransposons of transposab
 
 
 # Script Descriptions 
+```
+01_preprocess_input.sh
+02_preprocess_mapping.sh
+03_L1_detection.sh
+04_map_hg38.sh
+05_map_qc_LRS.sh
+06_read_filter.sh
+07_exon_filter.sh
+08_L1_loci_filter.sh
+09_map_qc_LRS.sh
+10_normalization_wgt_avg.sh
+```
+
 
 ## Input File Types
 The pipeline is designed to take in a single input file, which can be in either `FASTQ` or `FASTA` format, suitable for both RNA and cDNA sequencing data. If dealing with multiple FASTQ files, it is best to merge the files using the `cat` command beforehand.
