@@ -123,15 +123,30 @@ To customize the script, provide the following command-line parameters:
 The final number of reads for each region is located in the file titled: `active_coverage_for_weighted_avg.bed` (for example, if you are calculating over the active L1 regions)
 
 
-## 9. L1 Quantification: Normalization by Total Number of Reads and Weighted Average
-To determine the general expression level of these L1 loci, the calculated coverage values were first normalized by the total number of reads in the sample. Then, a weighted average was computed across all L1 loci in each of the reference L1Base2 categories: active, inactive, and intact only in ORF2, for each sample. This weighted average involved assigning weights based on the length of the reference L1 element with its corresponding expression value, scaled in millions, as displayed below. For i takes the L1 reference category, "active," "inactive," and "ORF2" to represent the different categories. 
-<img width="947" alt="weighted_avg_equation" src="https://github.com/WGLab/LongGF/assets/89222332/b348898f-7929-474b-91ec-ca6b9a441250">
+## 9. Mapping Statistics with LongReadSum on Filtered BAM File
 
-### `09_normalization_wgt_avg.sh`
+### `09_map_qc_LRS.sh` 
+
+LongReadSum was utilized to report mapping statistics for quality check analysis. 
 
 To customize the script, provide the following command-line parameters:
 1. Sample Name  (all one word)
-2. **Full** Path to the Input and Reference Files (entire path)
+2. Type of L1 Category you are analyzing (active, inactive, ORF2) 
+3. **Full** Path to the Input and Reference Files (entire path)
+
+
+
+
+## 10. L1 Quantification: Normalization by Total Number of Reads and Weighted Average
+To determine the general expression level of these L1 loci, the calculated coverage values were first normalized by the total number of reads in the sample. Then, a weighted average was computed across all L1 loci in each of the reference L1Base2 categories: active, inactive, and intact only in ORF2, for each sample. This weighted average involved assigning weights based on the length of the reference L1 element with its corresponding expression value, scaled in millions, as displayed below. For i takes the L1 reference category, "active," "inactive," and "ORF2" to represent the different categories. 
+<img width="947" alt="weighted_avg_equation" src="https://github.com/WGLab/LongGF/assets/89222332/b348898f-7929-474b-91ec-ca6b9a441250">
+
+### `10_normalization_wgt_avg.sh`
+
+To customize the script, provide the following command-line parameters:
+1. Sample Name  (all one word)
+2. Type of L1 Category you are analyzing (active, inactive, ORF2) 
+3. **Full** Path to the Input and Reference Files (entire path)
 
 
 
