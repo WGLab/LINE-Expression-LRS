@@ -1,0 +1,27 @@
+Full length L1 (hg38) (L1Base2 folder on GoogleDrive):
+https://l1base.charite.de/l1base.php
+
+
+# files are in the raw_reference_files folder
+
+
+There are 3 options, we can start from the largest one (FLnl-L1) and subsetting once we extracted the overlapping reads.
+
+NCBI38
+
+hsflil1_8438.bed 
+Human Full-Length, Intact LINE-1 Elements [FLI-L1] (Ens84.38)
+ (146 Entries, Last Update: 2016-06-01) BED Track
+Average Length: 8052.1
+
+
+hsorf2l1_8438.bed
+Human ORF2 Intact LINE-1 Elements [ORF2-L1] (Ens84.38)
+ (107 Entries, Last Update: 2016-07-09) BED Track
+
+
+
+hsflnil1_8438_rm.bed  
+Human Full-Length >4500nt LINE-1 Elements [FLnI-L1] (Ens84.38)
+ (13418 Entries, Last Update: 2021-10-07) BED Track
+

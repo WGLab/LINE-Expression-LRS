@@ -1,0 +1,21 @@
+
+Edits:
+
+1. Removed instances of inactive elements from the active elements regions. No instances of ORF2 overlapped with active elements. 
+
+2. Removed instances of active elements and ORF2 elements from inactive regions. 
+
+3. Inactive elements reference has “ L1 elements may have disruptions or mutations in one or both of their ORFs, rendering them non-functional“. So we can keep the ORF2 reference regions alone, and just remove them from the inactive reference. 
+     bedtools intersect -a ../hsflnil1_8438_rm.bed -b ../hsorf2l1_8438.bed ../hsflil1_8438.bed -wa -v > inactive_no_ORF2_no_ACTIVE.bed
+
+
+then sort the reference files: sort -k1V,1 -k2,2n inactive_no_ORF2_no_ACTIVE.bed > inactive_no_ORF2_no_ACTIVE.sorted.bed
+
+
+
+
+
+Resulting Number of Regions in Each File:
+   138 active_no_ORF2_no_INACTIVE.sorted.bed
+ 13292 inactive_no_ORF2_no_ACTIVE.sorted.bed
+   108 orf2_original.sorted.bed
