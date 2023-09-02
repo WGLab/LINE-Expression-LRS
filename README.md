@@ -161,7 +161,9 @@ To customize the script, provide the following command-line parameters:
 2. Type of L1 Category you are analyzing (active, inactive, ORF2) 
 3. **Full** Path to the Input and Reference Files (entire path)
 
+# Reference
 
+Rybacki K, Xia M, Ahsan MU, Xing J*, Wang K*. Assessing the expression of Long INterspersed Elements (LINEs) via long-read sequencing in diverse human tissues and cell lines. <cite>Submitted</cite>, 2023
 
 
 
