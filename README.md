@@ -15,7 +15,7 @@ Long INterspersed Elements (LINEs) are a class of retrotransposons of transposab
 6. Samtools (1.15.1)
 7. Bedtools (v2.30.0)
 ```
-Newer versions for each program may also work. 
+Newer versions for each program may also work, it is recommended to create a conda environment and download these programs within the environment. See this [reference](https://docs.anaconda.com/free/anaconda/packages/install-packages/) for more information and the [Anaconda Search engine](https://anaconda.org/bioconda/repo) for the program requirements specifics.  
 
 ## Reference Requirements 
 1. [Reference Genome: hg38](https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_000001405.15/)
