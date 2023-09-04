@@ -167,7 +167,7 @@ Reads with less than 10% diverged LINE/L1 elements were retained for Minimap2 sp
 2. Mapped BAM file to the hg38 reference genome (.bam)
 3. Sorted by position mapped BAM file to the hg38 reference genome (.bam)
 4. Indexed sorted by position mapped BAM file to the hg38 reference genome (.bai)
-5. Log output file (.log)
+
 
 
 
@@ -182,9 +182,19 @@ LongReadSum was utilized to report mapping statistics for quality check analysis
 2. **Full** Path to the Input and Reference Files (entire path)
 
 
+#### Example command: 
 
+`./05_map_qc_LRS.sh sample_name`
 
+#### Expected Output in c_hg38_mapping_LRS folder:
 
+1. Log output file (.log)
+2. Folder with sample_name holding the LongReadSum output
+3. LongReadSum Output:
+* bam_summary.txt
+* img (folder)
+* st_bam_statistics_dynamic.html
+* st_bam_statistics.html
 
 
 
@@ -198,10 +208,21 @@ Artifact-Based Filtering: First, we removed reads where less than 90% of the rea
 2. Specify the Reference L1 Region File (Active, Inactive, or Intact Only in ORF2) 
 3. **Full** Path to the Input and Reference Files (entire path)
 
-Example: `06_read_filter.sh sample_name active`
 
+#### Example command: Looking over the Active L1 Regions 
 
+`06_read_filter.sh sample_name active` 
 
+#### Expected Output in d_LINE_quantification/L1_ref_type folder:
+
+1. sample_name_L1_regions_reads.bam
+2. sample_name_read_filter_passed.bam
+3. sample_name_read_filter_passed.sorted_position.bam
+4. sample_name_read_filter_passed.sorted_position.bam.bai
+5. sample_name_bedgraph.bg
+6. sample_name_bedgraph_clean.bg
+7. sample_name_bedgraph_sorted.bg
+   
 
 
 
@@ -218,10 +239,13 @@ Next, L1 regions with exon overlap using GENCODE.v43 were removed. The exon anno
 1. **Full** Path to the Input and Reference Files (entire path)
 
 
+#### Example command: 
 
+`./07_exon_filter.sh sample_name`
 
+#### Expected Output in d_LINE_quantification/L1_ref_type/read_filter folder:
 
-
+1. active_no_ORF2_no_INACTIVE.bed: This file is provided with the references folder (../L1Base2_filtered/overlap_removed/active_no_ORF2_no_INACTIVE.bed) using gencode.annotation.v43 reference file. However, this script is the general set up if you would like to filter the L1 regions (active, inactive, or intact only in ORF2) reference file using a different gencode.annotation file to remove any exon overlap from the L1 regions. You would need to edit the gencode.annotation file for the exons only beforehand. 
 
 
 
@@ -234,11 +258,22 @@ Next, regions with fewer than two mapped reads, inconsistent read start position
 1. Sample Name  (all one word)
 2. **Full** Path to the Input and Reference Files (entire path)
 
-The final number of reads for each region is located in the file titled: `active_coverage_for_weighted_avg.bed` (for example, if you are calculating over the active L1 regions)
+The final number of reads for each region is located in the file titled: `active_coverage_for_weighted_avg.bed` (for example, if you are calculating over the **active** L1 regions)
 
 
+#### Example command: 
 
+`./08_L1_loci_filter.sh sample_name`
 
+#### Expected Output in d_LINE_quantification/L1_ref_type/L1_loci_filter folder:
+
+1. sample_name_consistent_passed_regions.bed: Remaining L1 (active, inactive, or intact only in ORF2) regions that have consistent read start or end positions, taking into account the strandness of the regions. 
+2. sample_name_regions_for_coverage.bed: Remaining regions that passed all L1 loci criteria and are used to calculate the L1 expression coverage levels over.  
+4. sample_name_threshold_passed_regions.bed: Remaining L1 (active, inactive, or intact only in ORF2) regions where the starting position of the region falls within a 1.5kb window relative to the average consistent starting position, taking into account the strandness of the regions. 
+5. sample_name_regions_for_coverage.sorted.bed: Sorted remaining regions that passed all L1 loci criteria and are used to calculate the L1 expression coverage levels over.  
+6. raw_coverage_values_mean.txt: Contains the specific L1 regions that passed the previous criteria with their initial coverage values. 
+7. filtered_coverage_values_mean.txt: Regions with coverage values less than 3 (< 2 reads) are filtered out, and the remaining regions are stored in this file.
+8. active_coverage_for_weighted_avg.bed: The final output of the script, containing all the active, inactive, or intact only in ORF2 regions with the specific regions that passed the previous criteria with their respective coverage values to be used in the next weighted average calculation. If L1 regions also meet the coverage threshold (3 reads, as per the script), their coverage values are included in this file; otherwise, the original reference regions are used.
 
 
 
@@ -254,7 +289,19 @@ LongReadSum was utilized to report mapping statistics for quality check analysis
 2. Type of L1 Category you are analyzing (active, inactive, ORF2) 
 3. **Full** Path to the Input and Reference Files (entire path)
 
+#### Example command: 
 
+`./09_map_qc_LRS.sh sample_name`
+
+#### Expected Output in d_LINE_quantification/L1_ref_type/read_filter folder:
+
+1. Log output file (.log)
+2. Folder with sample_name holding the LongReadSum output
+3. LongReadSum Output:
+* bam_summary.txt
+* img (folder)
+* st_bam_statistics_dynamic.html
+* st_bam_statistics.html
 
 
 
@@ -274,7 +321,14 @@ To determine the general expression level of these L1 loci, the calculated cover
 3. **Full** Path to the Input and Reference Files (entire path)
 
 
+#### Example command: 
 
+`./10_normalization_wgt_avg.sh sample_name`
+
+#### Expected Output in d_LINE_quantification/L1_ref_type folder:
+
+1. normalized_active_regions.bed: Using the total number of reads from the LongReadSum summary report output, the coverage values in the last column of the file `active_coverage_for_weighted_avg` were normalized. 
+2. coverage_weighted_avg.bed: Using the weighted average equation displayed above, the values in the last column of `normalized_active_regions.bed` were weighted together to output one value to represent the overall L1 expression value for the specific L1 reference region, active, inactive, or intact only in ORF2. 
 
 
 
