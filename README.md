@@ -26,7 +26,7 @@ Newer versions for each program may also work, it is recommended to create a con
 
 ## Example of Publicly Available Datasets 
 
-PacBio sequenced Universal Human Reference (UHR) cell line sample
+PacBio sequenced Universal Human Reference (UHR) cell line sample. See this [reference](https://downloads.pacbcloud.com/public/dataset/UHR_IsoSeq/FullLengthReads/) for additional information. 
 
 1. Download the dataset: 
 ```
