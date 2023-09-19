@@ -24,6 +24,22 @@ Newer versions for each program may also work, it is recommended to create a con
 4. [L1Base2 Active, Inactive, and Intact Only in ORF2 Reference Regions](https://l1base.charite.de/)
 
 
+## Example of Publicly Available Datasets 
+
+PacBio sequenced Universal Human Reference (UHR) cell line sample
+
+1. Download the dataset: 
+```
+wget https://downloads.pacbcloud.com/public/dataset/UHR_IsoSeq/FullLengthReads/flnc.bam
+```
+2. Convert the BAM file into a fastq file, before using the scripts to the pipeline below: 
+```
+samtools fastq flnc.bam > UHR_PacBio.fastq
+```
+
+The expected results are outlined in the reference publication below. 
+
+
 
 # Script Descriptions 
 ```
