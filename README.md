@@ -19,7 +19,7 @@ Newer versions for each program may also work, it is recommended to create a con
 
 ## Reference Requirements 
 1. [Reference Genome: hg38](https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_000001405.15/)
-2. [Comprehensive gene annotation: gencode.v40.annotation.gtf](https://www.gencodegenes.org/human/) (and/or the most recent version)
+2. [Comprehensive gene annotation: gencode.v40.annotation (GTF and BED File Formats)](https://www.gencodegenes.org/human/) (and/or the most recent version)
 3. Custom LINE Reference Library: UCSC hg38 RepeatMasker track and LINE/L1 consensus sequences from the Repbase RepeatMasker library (provided in the references folder) 
 4. [L1Base2 Active, Inactive, and Intact Only in ORF2 Reference Regions](https://l1base.charite.de/)
 
