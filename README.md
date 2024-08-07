@@ -354,5 +354,4 @@ To determine the general expression level of these L1 loci, the calculated cover
 If you have any questions/issues/bugs, please post them on GitHub. 
 
 ## Reference
-Rybacki K, Xia M, Ahsan MU, Xing J*, Wang K*. Assessing the expression of Long INterspersed Elements (LINEs) via long-read sequencing in diverse human tissues and cell lines. *Submitted*, 2023
-
+Rybacki, Karleena, et al. "Assessing the Expression of Long INterspersed Elements (LINEs) via Long-Read Sequencing in Diverse Human Tissues and Cell Lines." Genes 14.10 (2023): 1893.
